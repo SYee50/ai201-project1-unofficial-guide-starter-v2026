@@ -23,8 +23,8 @@ For at least 4 of my 5 test questions, the retrieved chunks include one that
 contains the answer.
 
 **Why this target:**
-<!-- e.g. "One of my questions is about a topic only two documents mention, so
-     I expect that one to be hard." -->
+
+I chose this target because I designed the questions based on information in the corpus, so I expect the retrieved chunks to include at least one chunk containing the answer for at least 4 of the 5 questions. I do not want to set a lower target because the questions were specifically chosen from information that the system should be able to retrieve.
 
 ---
 
@@ -33,8 +33,8 @@ contains the answer.
 Every answer the system produces names at least one source document.
 
 **Why this target:**
-<!-- Why all five and not four? What about your setup makes that achievable —
-     or what would have to go wrong for it not to be? -->
+
+I want the system to identify where the information used to generate each answer came from so that the answer can be evaluated against the source document. I chose every answer rather than a lower target because my five test questions were specifically selected from information the system should be able to answer, so each answer should have a source document that supports it
 
 ---
 
@@ -44,53 +44,29 @@ When I ask a question my documents clearly don't cover, the relevance gate
 stops it and the system returns "I don't have enough information about that" —
 in at least 4 of 5 tries.
 
-<!-- The five questions are the ones in `OUT_OF_SCOPE` at the bottom of
-     `questions.py`, and `run_eval.py` puts them through the gate and writes
-     what happened into your run log. Swap them for your own if you'd rather —
-     just keep five of them, or the "4 of 5" above has nothing to be 4 of. -->
-
 **Why this target:**
-<!-- What did your distances look like when you set the cutoff in Milestone 4?
-     Was there a clean gap, or did the two groups overlap? -->
+
+I want the system to avoid hallucinating answers when the documents do not contain enough information and instead acknowledge that it cannot answer the question. I chose 4 out of 5 because the relevance gate is still a work in progress, so I want it to reliably catch unsupported questions without requiring perfect performance.
 
 ---
 
 ## 4. Something about your chunks
 
-<!-- YOU WRITE THIS ONE.
-
-     How would you know if your chunks were the right size? Name something
-     countable or observable.
-
-     Examples of the right shape — don't copy these, they should come from
-     what you actually saw in Milestone 3:
-       - "At least 4 of 5 sampled chunks read as a complete thought, with no
-          sentence cut in half at either end."
-       - "No chunk is shorter than 200 characters, since anything below that
-          in my corpus turned out to be a heading with no content under it." -->
-
-
+For at least 4 out of 5 test questions, the retrieved answer containing chunk is between 100 and 500 characters long.
 
 **Why this target:**
 
-
+I chose this range because the campus life documents are short, self contained posts. I want the chunks to be large enough to keep a complete piece of information together, but not so large that unrelated information is included.
 
 ---
 
 ## 5. Your choice
 
-<!-- YOU WRITE THIS ONE TOO.
-
-     Pick something you actually care about getting right. It could be about
-     speed, about refusals, about a particular kind of question your corpus
-     handles badly, about source attribution being correct rather than merely
-     present — anything, as long as it names a number or an observable
-     outcome. -->
-
-
+For at least 4 of my 5 test questions, the system returns a complete response within 60 seconds.
 
 **Why this target:**
 
+I chose 60 seconds because each question appears to call to the Gemini API, which adds network and model-processing time. 60 seconds gives the API enough time to complete the request while still keeping the response time short enough for a user waiting for an answer.
 
 
 ---
