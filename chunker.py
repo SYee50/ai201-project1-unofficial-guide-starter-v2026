@@ -97,7 +97,7 @@ def split_documents(documents: list[Document]) -> list[Chunk]:
       - Would splitting on paragraph breaks keep more thoughts intact than
         splitting on a character count?
     """
-    chunk_size = 600
+    chunk_size = config.CHUNK_SIZE
     chunks = []
 
     for doc in documents:
@@ -110,6 +110,10 @@ def split_documents(documents: list[Document]) -> list[Chunk]:
                     produced_by="chunker.py::split_documents",
                 )
             )
+        else:
+            # Too long to keep whole — hand it to the character-window chunker
+            # rather than dropping it. Only this document goes to the fallback.
+            chunks.extend(fallback_split([doc], chunk_size=chunk_size))
 
     return chunks
 
