@@ -106,26 +106,34 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
      visible. Milestone 4. -->
 
 **Question:**
+When is the latest a student can add a course?
 
 **Answer:**
 
 ```
+A student can add a course through the end of the second week 
+(admin_add_drop_deadline.txt).
 ```
 
-**My relevance cutoff:**
+**My relevance cutoff:** 0.6
 
-<!-- The number you set in config.py, and how you got there.
-
-     You ran five questions your corpus covers and the five in OUT_OF_SCOPE
-     that it clearly doesn't, and wrote down the best distance for each. What
-     did those two groups look like? Where was the gap? Put the actual numbers
-     here — the table below wants all ten rows.
-
-     Milestone 4. -->
+I kept the relevance cutoff at 0.6 because it is above all of the observed in-corpus distances (0.3277-0.4343), giving relevant questions some leeway, while remaining well below the out of scope distances (0.8246-0.9340).
 
 | Question | In corpus? | Best distance |
 |---|---|---|
+|When is the latest a student can add a course?|Yes|0.4343|
+|Where is a quiet location on campus?|Yes|0.4009|
+|When is the best time to do laundry?|Yes|0.4270|
+|How far in advance do students need to book study rooms?|Yes|0.3277|
+|What is the maximum amount of hours students can work on campus each week during term?|Yes|0.3840|
+|What is the capital of Mongolia?|No|0.8246|
+|How do I change the oil in a diesel engine?|No|0.9340|
+|Who won the 1994 World Cup?|No|0.8859|
+|What is the recommended dosage of ibuprofen for a headache?|No|0.8442|
+|How do I write a for loop in Rust?|No|0.8960|
 |  |  |  |
+
+
 
 ## How I Used AI
 
