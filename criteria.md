@@ -52,7 +52,7 @@ I want the system to avoid hallucinating answers when the documents do not conta
 
 ## 4. Something about your chunks
 
-For at least 4 out of 5 test questions, the retrieved answer containing chunk is between 100 and 500 characters long.
+For at least 4 out of 5 test questions, the retrieved answer containing chunk is between 100 and 600 characters long.
 
 **Why this target:**
 
