@@ -30,6 +30,7 @@
 ## Chunking Strategy
 
 **Chunk size:** 600 characters maximum, with each document kept as a single chunk when it fits.
+
 **Overlap:** 0 characters.
 
 I chose a 600 character maximum because the campus_life documents are already short. The documents average about 317 characters, and the longest document is 549 characters, so a 600 character limit allows every document in the corpus to remain intact as a single chunk. I initially tested a smaller 300 character chunk size. This produced 133 chunks instead of 88 and sometimes split sentences in the middle. For example, one chunk ended with "seating is tight; about 40 seats f". I also noticed that some posts contain related information that depends on the context earlier in the same document, such as a location followed by details about that location. Splitting these posts could separate information from the context needed to understand it. Because the documents are short and self-contained, I decided that keeping each document as one chunk would preserve the most useful context for retrieval. I used 0 overlap because there is no need to repeat content when each document is already contained in a single chunk.
