@@ -21,11 +21,7 @@
 
 ## What This Does
 
-<!-- Three or four sentences. Which corpus you picked, and the kinds of
-     questions your system answers. Write it for someone who has never seen
-     this repo.
-
-     Milestone 5. -->
+The Unofficial Guide uses the campus_life corpus, which contains information about different parts of student life, including courses, housing, dining, transportation, orientation, winter gear, and campus policies. Users can ask questions about information covered in these documents, such as course workloads, housing, laundry, study rooms, academic deadlines, or getting around campus. The system finds relevant information from the corpus and uses it to generate a short answer while identifying the document the answer came from. If the corpus does not have enough information to answer a question, the system says it does not have enough information instead of guessing.
 
 ## Chunking Strategy
 
@@ -36,15 +32,6 @@
 I chose a 600 character maximum because the campus_life documents are already short. The documents average about 317 characters, and the longest document is 549 characters, so a 600 character limit allows every document in the corpus to remain intact as a single chunk. I initially tested a smaller 300 character chunk size. This produced 133 chunks instead of 88 and sometimes split sentences in the middle. For example, one chunk ended with "seating is tight; about 40 seats f". I also noticed that some posts contain related information that depends on the context earlier in the same document, such as a location followed by details about that location. Splitting these posts could separate information from the context needed to understand it. Because the documents are short and self-contained, I decided that keeping each document as one chunk would preserve the most useful context for retrieval. I used 0 overlap because there is no need to repeat content when each document is already contained in a single chunk.
 
 ## Sample Chunks
-
-<!-- Five chunks, pasted as text. Label each one and name the file it came from
-     AND the function that produced it — the grader checks your code against
-     what you claim here.
-
-     `python app.py chunks -n 5` prints all three for you. Copy them straight
-     across.
-
-     Milestone 3. -->
 
 **Chunk 1** — source: admin_add_drop_deadline.txt#0 `` — produced by: chunker.py::split_documents``
 
@@ -102,9 +89,6 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
 
 ## Sample Answer
 
-<!-- One complete question and answer, pasted as text, with the source line
-     visible. Milestone 4. -->
-
 **Question:**
 When is the latest a student can add a course?
 
@@ -137,23 +121,10 @@ I kept the relevance cutoff at 0.6 because it is above all of the observed in-co
 
 ## How I Used AI
 
-<!-- Two specific moments. For each: what you asked for, what came back, and
-     what you changed about it.
+**1.** I asked ChatGPT to write the chunking function based on my idea that the documents should stay together because they were short and mostly self contained. It wrote the split_documents function to keep each document as one chunk. I then asked it to try smaller chunk sizes so I could compare the results. I tested 300 character chunks and found that they created more chunks and sometimes split sentences in the middle, so I decided to keep the document sized chunks with a 600 character maximum.
 
-     "I asked Claude to write the chunking function from my notes. It ignored
-     the overlap, so I added that myself" is the level of detail we're after.
-     "I used AI to help me code" is not.
+**2.** I asked ChatGPT to help me understand the retrieval distances. I gave it the results from five in-scope and five out-of-scope questions, and it helped me compare the distance ranges. I decided to keep the cutoff at 0.6 because all of the in-scope questions were below it, while the out-of-scope questions were much farther away.
 
-     Milestone 5. -->
-
-**1.**
-
-**2.**
-
-<!-- ── Stretch features ─────────────────────────────────────────────────────
-     Doing one? Say so here BEFORE you start. A feature this README never
-     claims earns nothing.
-     ───────────────────────────────────────────────────────────────────────── -->
 
 ---
 
