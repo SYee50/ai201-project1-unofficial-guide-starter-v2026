@@ -40,6 +40,8 @@ from pathlib import Path
 import config
 import questions as qs
 
+import time
+
 
 def load_scorer():
     """Use scorer.py if the student has built it. Otherwise run unscored."""
@@ -61,11 +63,14 @@ def run_once(question: str, top_k, threshold, corpus, variant):
     decision = gate.check(results, threshold=threshold)
 
     if not decision.passed:
-        return gate.REFUSAL, results, decision
+        return gate.REFUSAL, 0.0, results, decision
 
     # cache=False on purpose. Three runs have to be three real answers.
+    start_time = time.perf_counter()
     answer = answer_from_chunks(question, results, cache=False)
-    return answer, results, decision
+    elapsed_time = time.perf_counter() - start_time
+
+    return answer, elapsed_time, results, decision
 
 
 def main():
@@ -109,14 +114,19 @@ def main():
 
         run_results = []
         for run in range(1, args.runs + 1):
-            answer, results, decision = run_once(
+            answer, response_time, results, decision = run_once(
                 question, top_k, threshold, corpus, args.variant
             )
             passed = judge(question, expects, answer, results) if judge else None
             run_results.append(passed)
 
             mark = {True: "pass", False: "fail", None: "—"}[passed]
-            print(f"  run {run}: {mark}  (best distance {decision.best_distance:.3f})")
+            # print(f"  run {run}: {mark}  (best distance {decision.best_distance:.3f})")
+            print(
+                f"  run {run}: {mark}  "
+                f"(response time {response_time:.2f}s, "
+                f"best distance {decision.best_distance:.3f})"
+            )
 
             transcript.append(
                 {
@@ -126,6 +136,7 @@ def main():
                     "sources": sorted({r.source for r in results}),
                     "best_distance": decision.best_distance,
                     "gate_passed": decision.passed,
+                    "response_time": response_time,
                 }
             )
 
@@ -251,6 +262,7 @@ def write_report(rows, transcript, gate_rows, args, corpus, top_k, threshold, sc
         lines += [
             f"### {entry['question']} — run {entry['run']}",
             "",
+            f"- Response time: {entry['response_time']:.2f} seconds",
             f"- Best distance: {entry['best_distance']:.4f} "
             f"({'passed' if entry['gate_passed'] else 'refused by'} the gate)",
             f"- Sources retrieved: {', '.join(entry['sources']) or 'none'}",
