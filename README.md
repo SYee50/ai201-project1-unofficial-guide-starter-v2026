@@ -244,11 +244,11 @@ list is the whole measurement.
 
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| 1 | Retrieved chunk contains the asnwer | MET | Each of the answers came with a source that contained the answer. In the chunker, each document is one chunk. |
+| 2 | Every answer names a source | MET | Each of the answers came with at least one source file name. |
+| 3 | Gate stops out-of-corpus questions | MET | The results showed that all 5 out-of-corpus questions were refused as the curoff was set to 0.6 and the distances for the out-of-corpus questions ranged from 0.825-0.934. |
+| 4 | Retrieved chunk is 100-600 characters | MET | In the campus_life corpus, the shortest chunk is 178 and the longest is 549, which all fall between 100 to 600. |
+| 5 | Response within 60 seconds | MET | All questions, except for one, had a response time below 60 seconds. The response time range for 14 out of 15 qustions was 4.96 seconds to 41.85 seconds. There was one question that had a response time of 571.78 seconds, but the target for this criteria was still met for that run because the other 4 response times were below 60 seconds. |
 
 ## Diagnoses
 
