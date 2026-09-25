@@ -130,10 +130,6 @@ I kept the relevance cutoff at 0.6 because it is above all of the observed in-co
 
 # Unit 2
 
-<!-- These sections get ADDED to what's already above. Don't delete or rewrite
-     unit 1 — the point is that someone can see what you said before you knew
-     how it went. -->
-
 ## Run Log — Before
 
 <!-- Your five criteria, three runs each. `python run_eval.py --label before`
@@ -148,15 +144,92 @@ I kept the relevance cutoff at 0.6 because it is above all of the observed in-co
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 4. Retrieved chunk is 100-600 characters| 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 5. Response within 60 seconds| 4 of 5 | 5 of 5 | 5 of 5 | 4 of 5 | MET |
 
 <!-- Underneath, paste the REAL output for each criterion from one of your
      runs — the actual text your system produced, not a description of it.
      Name the file and function that produced it. -->
+
+## Real output
+
+### When is the latest a student can add a course? — run 1
+
+- Response time: 4.96 seconds
+- Best distance: 0.4343 (passed the gate)
+- Sources retrieved: admin_add_drop_deadline.txt, admin_graduation_requirements.txt, admin_pass_fail_option.txt, course_biol_160_workload.txt, course_cs_340.txt
+
+```
+A student can add a course through the end of the second week (admin_add_drop_deadline.txt).
+```
+
+### Where is a quiet location on campus? — run 1
+
+- Response time: 12.23 seconds
+- Best distance: 0.4009 (passed the gate)
+- Sources retrieved: housing_aldridge_hall_noise.txt, housing_calder_annexe_noise.txt, housing_innisfree_hall_noise.txt, housing_old_brewhouse_noise.txt, housing_tamsin_court_noise.txt
+
+```
+If you need quiet to work, the library is open until 2am during term (found in `housing_tamsin_court_noise.txt`, `housing_aldridge_hall_noise.txt`, `housing_old_brewhouse_noise.txt`, `housing_calder_annexe_noise.txt`, and `housing_innisfree_hall_noise.txt`). Additionally, floors 3 and 4 of Aldridge Hall are genuinely enforced quiet floors (`housing_aldridge_hall_noise.txt`).
+```
+
+### When is the best time to do laundry? — run 1
+
+- Response time: 14.84 seconds
+- Best distance: 0.4270 (passed the gate)
+- Sources retrieved: housing_aldridge_hall_laundry.txt, housing_fenwick_court_laundry.txt, housing_morrow_house_laundry.txt, housing_old_brewhouse_laundry.txt, housing_tamsin_court_laundry.txt
+
+```
+The best time to do laundry is Tuesday or Wednesday morning. 
+
+Sources: 
+- housing_tamsin_court_laundry.txt
+- housing_old_brewhouse_laundry.txt
+- housing_aldridge_hall_laundry.txt
+- housing_morrow_house_laundry.txt
+- housing_fenwick_court_laundry.txt
+```
+
+### How far in advance do students need to book study rooms? — run 1
+
+- Response time: 13.38 seconds
+- Best distance: 0.3277 (passed the gate)
+- Sources retrieved: advising_registration.txt, course_cs_340.txt, dining_north_kitchen_followup.txt, money_textbooks.txt, study_group_rooms.txt
+
+```
+Students need to book study rooms two weeks in advance. 
+
+Source: study_group_rooms.txt
+```
+
+### What is the maximum amount of hours students can work on campus each week during term? — run 1
+
+- Response time: 17.03 seconds
+- Best distance: 0.3840 (passed the gate)
+- Sources retrieved: course_cs_210_workload.txt, course_cs_340.txt, course_econ_101_workload.txt, course_stat_150_workload.txt, money_jobs.txt
+
+```
+The maximum amount of hours students can work on campus during term is 20 hours a week (source: money_jobs.txt).
+```
+
+## The relevance gate on out-of-corpus questions
+
+Produced by `run_eval.py::check_out_of_scope`, cutoff 0.6. Refused 5 of 5.
+
+Retrieval is deterministic and the gate is a comparison against a
+fixed number, so these do not vary between runs — one pass over the
+list is the whole measurement.
+
+| Out-of-scope question | Best distance | Gate |
+|---|---|---|
+| What is the capital of Mongolia? | 0.825 | refused |
+| How do I change the oil in a diesel engine? | 0.934 | refused |
+| Who won the 1994 World Cup? | 0.886 | refused |
+| What is the recommended dosage of ibuprofen for a headache? | 0.844 | refused |
+| How do I write a for loop in Rust? | 0.896 | refused |
 
 ## Verdicts
 
